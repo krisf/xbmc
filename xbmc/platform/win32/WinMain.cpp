@@ -123,22 +123,7 @@ _Use_decl_annotations_ INT WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
   WSADATA wd{};
 
   // check if Kodi is already running
-  using KODI::PLATFORM::WINDOWS::ToW;
-  std::string appName = CCompileInfo::GetAppName();
-  HANDLE appRunningMutex = CreateMutex(nullptr, FALSE, ToW(appName + " Media Center").c_str());
-  if (appRunningMutex != nullptr && GetLastError() == ERROR_ALREADY_EXISTS)
-  {
-    auto appNameW = ToW(appName);
-    HWND hwnd = FindWindow(appNameW.c_str(), appNameW.c_str());
-    if (hwnd != nullptr)
-    {
-      // switch to the running instance
-      ShowWindow(hwnd, SW_RESTORE);
-      SetForegroundWindow(hwnd);
-    }
-    status = 0;
-    goto cleanup;
-  }
+
 
   //Initialize COM
   if ((hrCOM = CoInitializeEx(nullptr, COINIT_MULTITHREADED)) != S_OK)
